@@ -1,3 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clipboard HTML Test</title>
+  <style>
+    button { margin: 10px; }
+    img { width: 100px; }
+  </style>
+</head>
+<body>
+  <h1>EPIC Clipboard Test</h1>
+
+  <button onclick="copyImage()">Copy Image to Clipboard</button>
+  <button onclick="copyTableWithURLs()">Copy Table with Linked Images</button>
+  <button onclick="copyTableWithEmbedded()">Copy Table with Embedded Images</button>
+
+        <table border="1">
+        <tr>
+          <th>Image</th><th>Description</th>
+        </tr>
+        <tr>
+          <td><img src="0_left.png"></td><td>Linked image 1</td>
+        </tr>
+        <tr>
+          <td><img src="0_right.png"></td><td>Linked image 2</td>
+        </tr>
+        <tr>
+          <td><img src="1_left.png"></td><td>Linked image 3</td>
+        </tr>
+      </table>
+
 <script>
   async function copyImage() {
     const img = await fetch("0_left.png");
@@ -77,3 +109,5 @@
     });
   }
 </script>
+</body>
+</html>
