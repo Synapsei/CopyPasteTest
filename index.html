@@ -17,7 +17,7 @@
 
   <script>
     async function copyImage() {
-      const img = await fetch("https://sample-videos.com/img/Sample-jpg-image-200kb.jpg");
+      const img = await fetch("0_left.png");
       const blob = await img.blob();
       const item = new ClipboardItem({ [blob.type]: blob });
       await navigator.clipboard.write([item]);
@@ -31,7 +31,7 @@
             <th>Image</th><th>Description</th>
           </tr>
           <tr>
-            <td><img src="https://via.placeholder.com/100"></td><td>Linked image</td>
+            <td><img src="0_left.png"></td><td>Linked image</td>
           </tr>
         </table>
       `;
@@ -40,7 +40,7 @@
     }
 
     async function copyTableWithEmbedded() {
-      const imgData = await fetch("https://sample-videos.com/img/Sample-jpg-image-200kb.jpg");
+      const imgData = await fetch("0_left.png");
       const blob = await imgData.blob();
       const base64 = await blobToBase64(blob);
 
