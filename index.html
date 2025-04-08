@@ -1,29 +1,79 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clipboard HTML Test</title>
+  <style>
+    button { margin: 10px; }
+    img { width: 100px; }
+  </style>
+</head>
+<body>
+  <h1>EPIC Clipboard Test</h1>
 
-<html lang=”en”>
+  <button onclick="copyImage()">Copy Image to Clipboard</button>
+  <button onclick="copyTableWithURLs()">Copy Table with Linked Images</button>
+  <button onclick="copyTableWithEmbedded()">Copy Table with Embedded Images</button>
 
-  <head>
+  <script>
+    async function copyImage() {
+      const img = await fetch("https://via.placeholder.com/100");
+      const blob = await img.blob();
+      const item = new ClipboardItem({ [blob.type]: blob });
+      await navigator.clipboard.write([item]);
+      alert("Image copied to clipboard");
+    }
 
-    <meta charset=”UTF-8″>
+    async function copyTableWithURLs() {
+      const html = `
+        <table border="1">
+          <tr>
+            <th>Image</th><th>Description</th>
+          </tr>
+          <tr>
+            <td><img src="https://via.placeholder.com/100"></td><td>Linked image</td>
+          </tr>
+        </table>
+      `;
+      await copyHTMLToClipboard(html);
+      alert("HTML table with linked image copied");
+    }
 
-    <meta name=”viewport” content=”width=device-width, initial-scale=1.0″>
+    async function copyTableWithEmbedded() {
+      const imgData = await fetch("https://via.placeholder.com/100");
+      const blob = await imgData.blob();
+      const base64 = await blobToBase64(blob);
 
-    <meta http-equiv=”X-UA-Compatible” content=”ie=edge”>
+      const html = `
+        <table border="1">
+          <tr>
+            <th>Image</th><th>Description</th>
+          </tr>
+          <tr>
+            <td><img src="${base64}"></td><td>Embedded base64 image</td>
+          </tr>
+        </table>
+      `;
+      await copyHTMLToClipboard(html);
+      alert("HTML table with embedded image copied");
+    }
 
-    <title>Copy to clipboard test</title>
+    async function copyHTMLToClipboard(html) {
+      const type = "text/html";
+      const blob = new Blob([html], { type });
+      const data = [new ClipboardItem({ [type]: blob })];
+      await navigator.clipboard.write(data);
+    }
 
-  </head>
-
-  <body>
-
-    <main>
-
-        <h1>Welcome to My Website [Name of the website]</h1>  
-
-        <p>This is my new website hosted on GitHub Pages!</p>
-
-    </main>
-
-  </body>
-
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+  </script>
+</body>
 </html>
+
