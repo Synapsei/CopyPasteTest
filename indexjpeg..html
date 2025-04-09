@@ -40,7 +40,7 @@
   }
 }
   async function copyImage() {
-    const img = await fetch("0_left.png");
+    const img = await fetch("https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg");
     const blob = await img.blob();
     const item = new ClipboardItem({ [blob.type]: blob });
     await navigator.clipboard.write([item]);
