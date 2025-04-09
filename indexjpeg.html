@@ -16,116 +16,127 @@
   <button onclick="copyTableWithURLs()">Copy Table with Linked Images</button>
   <button onclick="copyTableWithEmbedded()">Copy Table with Embedded Images</button>
 
-        <table border="1">
-        <tr>
-          <th>Image</th><th>Description</th>
-        </tr>
-        <tr>
-          <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg"></td><td>Linked image 1</td>
-        </tr>
-        <tr>
-          <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319131527128.jpg"></td><td>Linked image 2</td>
-        </tr>
-        <tr>
-          <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120253112.jpg"></td><td>Linked image 3</td>
-        </tr>
-      </table>
+  <table border="1">
+    <tr>
+      <th>Image</th><th>Description</th>
+    </tr>
+    <tr>
+      <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg"></td><td>Linked image 1</td>
+    </tr>
+    <tr>
+      <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319131527128.jpg"></td><td>Linked image 2</td>
+    </tr>
+    <tr>
+      <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120253112.jpg"></td><td>Linked image 3</td>
+    </tr>
+  </table>
 
-<script>
+  <script>
     function checkClipboardAPI() {
-  if (navigator.clipboard) {
-    alert("Clipboard API is available!");
-  } else {
-    alert("Clipboard API is not available in this browser.");
-  }
-}
-  async function copyImage() {
-
-         try {
-    const img = await fetch("https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg");
-    const blob = await img.blob();
-    const item = new ClipboardItem({ [blob.type]: blob });
-    await navigator.clipboard.write([item]);
-    alert("Image copied to clipboard");
-            } catch (error) {
-        alert('❌ Failed to copy image: ' + error.message);
-        console.error(error);
-  }
-
-  async function copyTableWithURLs() {
-    const html = `
-      <table border="1">
-        <tr>
-          <th>Image</th><th>Description</th>
-        </tr>
-        <tr>
-          <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg"></td><td>Linked image 1</td>
-        </tr>
-        <tr>
-          <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319131527128.jpg"></td><td>Linked image 2</td>
-        </tr>
-        <tr>
-          <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120253112.jpg"></td><td>Linked image 3</td>
-        </tr>
-      </table>
-    `;
-    await copyHTMLToClipboard(html);
-    alert("HTML table with linked images copied");
-  }
-
-  async function copyTableWithEmbedded() {
-    const urls = [
-      "https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg",
-      "https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319131527128.jpg",
-      "https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120253112.jpg"
-    ];
-
-    const embeddedImgs = await Promise.all(urls.map(async (url) => {
-      const res = await fetch(url);
-      const blob = await res.blob();
-      return await blobToBase64(blob);
-    }));
-
-    const html = `
-      <table border="1">
-        <tr>
-          <th>Image</th><th>Description</th>
-        </tr>
-        <tr>
-          <td><img src="${embeddedImgs[0]}"></td><td>Embedded image 1</td>
-        </tr>
-        <tr>
-          <td><img src="${embeddedImgs[1]}"></td><td>Embedded image 2</td>
-        </tr>
-        <tr>
-          <td><img src="${embeddedImgs[2]}"></td><td>Embedded image 3</td>
-        </tr>
-      </table>
-    `;
-    await copyHTMLToClipboard(html);
-    alert("HTML table with embedded images copied");
-  }
-
-  async function copyHTMLToClipboard(html) {
-       try {
-    const type = "text/html";
-    const blob = new Blob([html], { type });
-    const data = [new ClipboardItem({ [type]: blob })];
-    await navigator.clipboard.write(data);
-               } catch (error) {
-        alert('❌ Failed to copy image: ' + error.message);
-        console.error(error);
+      if (navigator.clipboard) {
+        alert("Clipboard API is available!");
+      } else {
+        alert("Clipboard API is not available in this browser.");
       }
-  }
+    }
 
-  function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  }
-</script>
+    async function copyImage() {
+      try {
+        const img = await fetch("https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg");
+        const blob = await img.blob();
+        const item = new ClipboardItem({ [blob.type]: blob });
+        await navigator.clipboard.write([item]);
+        alert("✅ Image copied to clipboard");
+      } catch (error) {
+        alert("❌ Failed to copy image: " + error.message);
+        console.error("Error in copyImage:", error);
+      }
+    }
+
+    async function copyTableWithURLs() {
+      try {
+        const html = `
+          <table border="1">
+            <tr>
+              <th>Image</th><th>Description</th>
+            </tr>
+            <tr>
+              <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg"></td><td>Linked image 1</td>
+            </tr>
+            <tr>
+              <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319131527128.jpg"></td><td>Linked image 2</td>
+            </tr>
+            <tr>
+              <td><img src="https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120253112.jpg"></td><td>Linked image 3</td>
+            </tr>
+          </table>
+        `;
+        await copyHTMLToClipboard(html);
+        alert("✅ HTML table with linked images copied to clipboard");
+      } catch (error) {
+        alert("❌ Failed to copy HTML table with URLs: " + error.message);
+        console.error("Error in copyTableWithURLs:", error);
+      }
+    }
+
+    async function copyTableWithEmbedded() {
+      try {
+        const urls = [
+          "https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120142706.jpg",
+          "https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319131527128.jpg",
+          "https://asmistest.regionh.top.local/ASMIS/Level1/1377385073/thumbnail_20250319120253112.jpg"
+        ];
+
+        const embeddedImgs = await Promise.all(urls.map(async (url) => {
+          const res = await fetch(url);
+          const blob = await res.blob();
+          return await blobToBase64(blob);
+        }));
+
+        const html = `
+          <table border="1">
+            <tr>
+              <th>Image</th><th>Description</th>
+            </tr>
+            <tr>
+              <td><img src="${embeddedImgs[0]}"></td><td>Embedded image 1</td>
+            </tr>
+            <tr>
+              <td><img src="${embeddedImgs[1]}"></td><td>Embedded image 2</td>
+            </tr>
+            <tr>
+              <td><img src="${embeddedImgs[2]}"></td><td>Embedded image 3</td>
+            </tr>
+          </table>
+        `;
+        await copyHTMLToClipboard(html);
+        alert("✅ HTML table with embedded images copied to clipboard");
+      } catch (error) {
+        alert("❌ Failed to copy HTML table with embedded images: " + error.message);
+        console.error("Error in copyTableWithEmbedded:", error);
+      }
+    }
+
+    async function copyHTMLToClipboard(html) {
+      try {
+        const type = "text/html";
+        const blob = new Blob([html], { type });
+        const data = [new ClipboardItem({ [type]: blob })];
+        await navigator.clipboard.write(data);
+      } catch (error) {
+        alert("❌ Failed to copy HTML content: " + error.message);
+        console.error("Error in copyHTMLToClipboard:", error);
+      }
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+  </script>
 </body>
 </html>
