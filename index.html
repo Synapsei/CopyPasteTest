@@ -41,11 +41,16 @@
 }
   
   async function copyImage() {
+         try {
     const img = await fetch("0_left.png");
     const blob = await img.blob();
     const item = new ClipboardItem({ [blob.type]: blob });
     await navigator.clipboard.write([item]);
     alert("Image copied to clipboard");
+                 } catch (error) {
+        alert('❌ Failed to copy image: ' + error.message);
+        console.error(error);
+      }
   }
 
   async function copyTableWithURLs() {
@@ -103,11 +108,16 @@
   }
 
   async function copyHTMLToClipboard(html) {
+           try {
     const type = "text/html";
     const blob = new Blob([html], { type });
     const data = [new ClipboardItem({ [type]: blob })];
     await navigator.clipboard.write(data);
   }
+          } catch (error) {
+        alert('❌ Failed to copy image: ' + error.message);
+        console.error(error);
+      }
 
   function blobToBase64(blob) {
     return new Promise((resolve, reject) => {
